@@ -1,0 +1,8 @@
+.idea
+coverage.out
+*.DS_Store
+*.pb.go
+*.validate.go
+vendor
+*.sw[op]
+log/*

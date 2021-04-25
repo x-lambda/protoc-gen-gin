@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 
+	"github.com/x-lambda/protoc-gen-gin/generator"
+
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/types/pluginpb"
 )
@@ -22,7 +24,7 @@ func main() {
 				continue
 			}
 
-			//
+			generator.GenerateFile(gen, f)
 		}
 
 		return nil

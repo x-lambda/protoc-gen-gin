@@ -6,3 +6,5 @@ coverage.out
 vendor
 *.sw[op]
 log/*
+main
+protoc-gen-gin

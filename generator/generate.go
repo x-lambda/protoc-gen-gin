@@ -17,7 +17,7 @@ const (
 
 var methodSets = make(map[string]int)
 
-func generateFile(gen *protogen.Plugin, file *protogen.File) *protogen.GeneratedFile {
+func GenerateFile(gen *protogen.Plugin, file *protogen.File) *protogen.GeneratedFile {
 	if len(file.Services) == 0 {
 		return nil
 	}
@@ -58,7 +58,8 @@ func genService(gen *protogen.Plugin, file *protogen.File, g *protogen.Generated
 		sd.Methods = append(sd.Methods, genMethod(method)...)
 	}
 
-	g.P(sd.execute())
+	text := sd.execute()
+	g.P(text)
 }
 
 func genMethod(m *protogen.Method) []*method {

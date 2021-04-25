@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// go:embed template.go.tpl
+//go:embed template.go.tpl
 var tpl string
 
 // rpc GetDemoName(*Req, *Resp)

@@ -12,6 +12,7 @@ go get -u github.com/x-lambda/protoc-gen-gin
 
 使用
 ```shell
-protoc -I ./rpc/ --go_out ./rpc --go_opt=paths=source_relative \
---gin_out ./rpc --gin_opt=paths=source_relative ./rpc/demo/v0/demo.proto
+protoc -I ./example/rpc/ \
+--go_out ./example/rpc --go_opt=paths=source_relative \
+--gin_out ./example/rpc --gin_opt=paths=source_relative ./example/rpc/demo/v0/demo.proto
 ```

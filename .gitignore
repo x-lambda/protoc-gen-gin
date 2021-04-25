@@ -8,3 +8,4 @@ vendor
 log/*
 main
 protoc-gen-gin
+example/protoc-gen-gin-example

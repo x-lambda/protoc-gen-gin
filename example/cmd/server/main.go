@@ -1,9 +1,13 @@
 package server
 
 import (
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
+
+	"github.com/x-lambda/protoc-gen-gin-example/util/middleware/timeout"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,27 +17,32 @@ func main() {
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP)
 
+	fmt.Println("start server")
 	startServer()
 
 	for {
 		select {
 		case <-reload:
 		case sg := <-stop:
-			stopServer()
-			// 仿 nginx 使用 HUP 信号重载配置
-			if sg == syscall.SIGHUP {
-				startServer()
+			fmt.Println("exit ....")
+			if sg == syscall.SIGINT {
+				os.Exit(0)
 			} else {
-				return
+				os.Exit(0)
 			}
 		}
 	}
 }
 
 func startServer() {
+	// TODO ctx 处理
 	router := gin.New()
+
+	// middleware
+	router.Use(timeout.Timeout(time.Millisecond * 500))
+
 	register(router, internal)
-	router.Run()
+	router.Run("127.0.0.1:8080")
 }
 
 func stopServer() {}

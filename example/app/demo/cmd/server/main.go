@@ -23,6 +23,7 @@ func main() {
 	for {
 		select {
 		case <-reload:
+			os.Exit(0)
 		case sg := <-stop:
 			fmt.Println("exit ....")
 			if sg == syscall.SIGINT {
@@ -30,6 +31,8 @@ func main() {
 			} else {
 				os.Exit(0)
 			}
+		default:
+			os.Exit(0)
 		}
 	}
 }

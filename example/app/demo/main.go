@@ -1,10 +1,11 @@
 package main
 
 import (
+	"github.com/x-lambda/protoc-gen-gin-example/app/demo/cmd/help"
+	"github.com/x-lambda/protoc-gen-gin-example/app/demo/cmd/job"
+	"github.com/x-lambda/protoc-gen-gin-example/app/demo/cmd/server"
+
 	"github.com/spf13/cobra"
-	"github.com/x-lambda/protoc-gen-gin-example/cmd/help"
-	"github.com/x-lambda/protoc-gen-gin-example/cmd/job"
-	"github.com/x-lambda/protoc-gen-gin-example/cmd/server"
 )
 
 func main() {

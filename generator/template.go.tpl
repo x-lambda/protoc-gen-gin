@@ -104,6 +104,9 @@ func (s *{{$.Name}}) {{ .HandlerName }} (ctx *gin.Context) {
 	for k, v := range ctx.Request.Header {
 		md.Set(k, v...)
 	}
+
+	// support GRPC/HTTP
+	// timeout check with newCtx.Done()
 	newCtx := metadata.NewIncomingContext(ctx, md)
 	out, err := s.server.({{ $.InterfaceName }}).{{.Name}}(newCtx, &in)
 	if err != nil {

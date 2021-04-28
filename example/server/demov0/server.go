@@ -11,7 +11,7 @@ import (
 type DemoServer struct{}
 
 func (s *DemoServer) CreateArticle(ctx context.Context, req *pb.Article) (resp *pb.Article, err error) {
-	demo.TestTimeout(ctx)
+	err = demo.TestTimeout(ctx)
 	resp = &pb.Article{}
 	return
 }

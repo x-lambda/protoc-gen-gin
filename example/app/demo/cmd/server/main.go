@@ -8,13 +8,18 @@ import (
 	"time"
 
 	"github.com/x-lambda/protoc-gen-gin-example/util/middleware/timeout"
+	"github.com/x-lambda/protoc-gen-gin/example/util/conf"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	reload := make(chan int, 1)
+	reload := make(chan struct{}, 1)
 	stop := make(chan os.Signal, 1)
+
+	// 监听配置文件变更
+	conf.OnConfigChange(func() { reload <- struct{}{} })
+	conf.WatchConfig()
 	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP)
 
 	fmt.Println("start server")

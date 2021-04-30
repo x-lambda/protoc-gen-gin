@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/x-lambda/protoc-gen-gin-example/dao/demo"
+	"github.com/x-lambda/protoc-gen-gin/example/dao/demo"
 )
 
 func TestTimeout(ctx context.Context) (err error) {

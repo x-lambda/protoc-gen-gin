@@ -7,8 +7,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/x-lambda/protoc-gen-gin-example/util/middleware/timeout"
 	"github.com/x-lambda/protoc-gen-gin/example/util/conf"
+	"github.com/x-lambda/protoc-gen-gin/example/util/middleware/timeout"
 
 	"github.com/gin-gonic/gin"
 )

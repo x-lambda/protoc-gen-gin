@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/x-lambda/protoc-gen-gin-example/util/db"
+	"github.com/x-lambda/protoc-gen-gin/example/util/db"
 )
 
 type Item struct {

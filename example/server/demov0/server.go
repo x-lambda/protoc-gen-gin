@@ -3,9 +3,9 @@ package demov0
 import (
 	"context"
 
-	"github.com/x-lambda/protoc-gen-gin-example/service/demo"
+	"github.com/x-lambda/protoc-gen-gin/example/service/demo"
 
-	pb "github.com/x-lambda/protoc-gen-gin-example/rpc/demo/v0"
+	pb "github.com/x-lambda/protoc-gen-gin/example/rpc/demo/v0"
 )
 
 type DemoServer struct{}

@@ -1,8 +1,8 @@
 package server
 
 import (
-	demoV0 "github.com/x-lambda/protoc-gen-gin-example/rpc/demo/v0"
-	serverDemoV0 "github.com/x-lambda/protoc-gen-gin-example/server/demov0"
+	demoV0 "github.com/x-lambda/protoc-gen-gin/example/rpc/demo/v0"
+	serverDemoV0 "github.com/x-lambda/protoc-gen-gin/example/server/demov0"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,1 +1,0 @@
-# protoc-gen-gin example

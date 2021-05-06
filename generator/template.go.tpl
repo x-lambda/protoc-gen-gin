@@ -100,14 +100,16 @@ func (s *{{$.Name}}) {{ .HandlerName }} (ctx *gin.Context) {
 		return
 	}
 {{end}}
-	md := metadata.New(nil)
-	for k, v := range ctx.Request.Header {
-		md.Set(k, v...)
-	}
 
+	// TODO use metadata.NewIncomingContext
 	// support GRPC/HTTP
 	// timeout check with newCtx.Done()
-	newCtx := metadata.NewIncomingContext(ctx, md)
+	// md := metadata.New(nil)
+    // for k, v := range ctx.Request.Header {
+    	// md.Set(k, v...)
+    // }
+	// newCtx := metadata.NewIncomingContext(ctx, md)
+	newCtx := ctx.Request.Context()
 	out, err := s.server.({{ $.InterfaceName }}).{{.Name}}(newCtx, &in)
 	if err != nil {
 		s.resp.Error(ctx, err)

@@ -78,12 +78,7 @@ func (resp default{{$.Name}}Resp) Success(ctx *gin.Context, data interface{}) {
 {{range .Methods}}
 func (s *{{$.Name}}) {{ .HandlerName }} (ctx *gin.Context) {
 	var in {{.Request}}
-{{if .HasPathParams }}
-	if err := ctx.ShouldBindUri(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
-		return
-	}
-{{end}}
+
 {{if eq .Method "GET" "DELETE" }}
 	if err := ctx.ShouldBindQuery(&in); err != nil {
 		s.resp.ParamsError(ctx, err)
@@ -99,6 +94,12 @@ func (s *{{$.Name}}) {{ .HandlerName }} (ctx *gin.Context) {
 		s.resp.ParamsError(ctx, err)
 		return
 	}
+{{end}}
+
+{{if .HasPathParams }}
+	{{range $item := .PathParams}}
+	in.{{$.GoCamelCase $item }} = ctx.Params.ByName("{{$item}}")
+	{{end}}
 {{end}}
 
 	// TODO use metadata.NewIncomingContext

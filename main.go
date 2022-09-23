@@ -12,6 +12,9 @@ import (
 func main() {
 	var flags flag.FlagSet
 
+	var paramErrCode string
+	flags.StringVar(&paramErrCode, "code", "400", "the code of response data when param parse error")
+
 	options := protogen.Options{
 		ParamFunc: flags.Set,
 	}

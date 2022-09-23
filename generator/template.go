@@ -56,9 +56,10 @@ func (m *method) initPathParams() {
 }
 
 type service struct {
-	Name     string
-	FullName string
-	FilePath string
+	Name      string
+	FullName  string
+	FilePath  string
+	ParamCode string
 
 	Methods   []*method
 	MethodSet map[string]*method
@@ -89,6 +90,14 @@ func (s *service) execute() string {
 
 func (s *service) InterfaceName() string {
 	return s.Name + "HTTPServer"
+}
+
+func (s *service) GetParamCode() string {
+	if s.ParamCode == "" {
+		return "400"
+	}
+
+	return s.ParamCode
 }
 
 func isASCIILower(c byte) bool {

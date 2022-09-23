@@ -10,4 +10,9 @@
 go get -u github.com/x-lambda/protoc-gen-gin
 ```
 
+使用方式
+```shell
+protoc --gin_out .  --gin_opt=paths=source_relative --gin_opt=code=-1 demo.proto
+```
+
 example: https://github.com/x-lambda/nautilus

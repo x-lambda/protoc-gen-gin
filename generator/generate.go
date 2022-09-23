@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"strings"
+
 	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
@@ -52,6 +54,14 @@ func genService(gen *protogen.Plugin, file *protogen.File, g *protogen.Generated
 		Name:     s.GoName,
 		FullName: string(s.Desc.FullName()),
 		FilePath: file.Desc.Path(),
+	}
+
+	ps := strings.Split(gen.Request.GetParameter(), ",")
+	for _, v := range ps {
+		fields := strings.Split(v, "=")
+		if len(fields) == 2 && strings.Trim(fields[0], " ") == "code" {
+			sd.ParamCode = fields[1]
+		}
 	}
 
 	for _, method := range s.Methods {

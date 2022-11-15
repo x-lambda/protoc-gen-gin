@@ -33,6 +33,7 @@ func GenerateFile(gen *protogen.Plugin, file *protogen.File) *protogen.Generated
 	g.P("// This is a compile-time assertion to ensure that this generated file")
 	g.P("// is compatible with the github.com/x-lambda/protoc-gen-gin package it is being compiled against.")
 	g.P("// ", contextPkg.Ident("")) // TODO metadata
+	g.P("// ", metadataPkg.Ident(""))
 	g.P("// ", ginPkg.Ident(""), errPkg.Ident(""))
 	g.P()
 

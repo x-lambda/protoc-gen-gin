@@ -66,7 +66,7 @@ func (resp default{{$.Name}}Resp) Error(ctx *gin.Context, err error) {
 // ParamsError 参数错误
 func (resp default{{$.Name}}Resp) ParamsError (ctx *gin.Context, err error) {
 	_ = ctx.Error(err)
-	resp.response(ctx, 400, {{ $.GetParamCode }}, "params error", nil)
+	resp.response(ctx, 400, {{ $.GetParamCode }}, "params error", err.Error())
 }
 
 // Success 返回成功信息

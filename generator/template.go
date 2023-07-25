@@ -60,6 +60,7 @@ type service struct {
 	FullName  string
 	FilePath  string
 	ParamCode string
+	ErrData   bool
 
 	Methods   []*method
 	MethodSet map[string]*method
@@ -98,6 +99,10 @@ func (s *service) GetParamCode() string {
 	}
 
 	return s.ParamCode
+}
+
+func (s *service) WithErrData() bool {
+	return s.ErrData
 }
 
 func isASCIILower(c byte) bool {

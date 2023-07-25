@@ -1,6 +1,7 @@
 package generator
 
 import (
+	"strconv"
 	"strings"
 
 	"google.golang.org/genproto/googleapis/api/annotations"
@@ -62,6 +63,13 @@ func genService(gen *protogen.Plugin, file *protogen.File, g *protogen.Generated
 		fields := strings.Split(v, "=")
 		if len(fields) == 2 && strings.Trim(fields[0], " ") == "code" {
 			sd.ParamCode = fields[1]
+		}
+		if len(fields) == 2 && strings.Trim(fields[0], " ") == "err_data" {
+			errData, err := strconv.ParseBool(fields[1])
+			if err != nil {
+				errData = false
+			}
+			sd.ErrData = errData
 		}
 	}
 
@@ -130,12 +138,16 @@ func buildHTTPRule(m *protogen.Method, rule *annotations.HttpRule) *method {
 
 func buildMethodDesc(m *protogen.Method, httpMethod string, path string) *method {
 	defer func() { methodSets[m.GoName]++ }()
-
+	reply := "*" + m.Output.GoIdent.GoName
+	// if output is stream, reply is array of output
+	if m.Desc.IsStreamingServer() {
+		reply = "[] " + reply
+	}
 	md := &method{
 		Name:    m.GoName,
 		Num:     methodSets[m.GoName],
 		Request: m.Input.GoIdent.GoName,
-		Reply:   m.Output.GoIdent.GoName,
+		Reply:   reply,
 		Path:    path,
 		Method:  httpMethod,
 	}

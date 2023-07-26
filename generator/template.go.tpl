@@ -1,6 +1,6 @@
 type {{ $.InterfaceName }} interface {
 {{range .MethodSet}}
-	{{.Name}}(context.Context, *{{.Request}}) (*{{.Reply}}, error)
+	{{.Name}}(context.Context, *{{.Request}}) ({{.Reply}}, error)
 {{end}}
 }
 func Register{{ $.InterfaceName }}(r gin.IRouter, srv {{ $.InterfaceName }}) {
@@ -16,7 +16,7 @@ type {{$.Name}} struct{
 	server {{ $.InterfaceName }}
 	router gin.IRouter
 	resp  interface {
-		Error(ctx *gin.Context, err error)
+		Error(ctx *gin.Context, err error, data ... interface{})
 		ParamsError (ctx *gin.Context, err error)
 		Success(ctx *gin.Context, data interface{})
 	}
@@ -34,7 +34,7 @@ func (resp default{{$.Name}}Resp) response(ctx *gin.Context, status, code int, m
 }
 
 // Error 返回错误信息
-func (resp default{{$.Name}}Resp) Error(ctx *gin.Context, err error) {
+func (resp default{{$.Name}}Resp) Error(ctx *gin.Context, err error, data ... interface{}) {
 	code := -1
 	status := 500
 	msg := err.Error()
@@ -59,6 +59,15 @@ func (resp default{{$.Name}}Resp) Error(ctx *gin.Context, err error) {
 	}
 
 	_ = ctx.Error(err)
+
+	if len(data) == 1{
+		resp.response(ctx, status, code, msg, data[0])
+		return
+	}
+	if len(data) > 1 {
+		resp.response(ctx, status, code, msg, []interface{}{data})
+		return
+	}
 
 	resp.response(ctx, status, code, msg, nil)
 }
@@ -108,7 +117,11 @@ func (s *{{$.Name}}) {{ .HandlerName }} (ctx *gin.Context) {
 	newCtx := metadata.NewIncomingContext(ctx.Request.Context(), md)
 	out, err := s.server.({{ $.InterfaceName }}).{{.Name}}(newCtx, &in)
 	if err != nil {
+{{if $.WithErrData }}
+		s.resp.Error(ctx, err, out)
+{{else}}
 		s.resp.Error(ctx, err)
+{{end}}
 		return
 	}
 
